@@ -1,0 +1,9 @@
+O que são MODELS?
+São códigos em Python que representam tabelas do banco de dados.
+Isso funciona através do ORM - Object-Relational Mapping (Mapeamento Objeto-Relacional) que trabalha com objetos de Python que, através do SQLAlchemy, 
+é convertido em SQL. 
+Dessa forma: Uma CLASSE representa uma TABELA, os atributos da classe representam COLUNAS DA TABELA e as INSTÂNCIAS são as LINHAS DA TABELA.
+
+APRENDIZADOS
+--> NUMERIC: Tipo onde você pode escrever o tamanho do número e definir quantas casas decimais.
+--> ENUM: Usado para definir uma lista fixa de variáveis permitidas par tal variável/coluna.
