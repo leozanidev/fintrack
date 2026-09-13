@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from dotenv import load_dotenv
 import os
+from urllib.parse import quote_plus
 
 # Carregando as variáveis de ambiente para dentro do arquivo
 load_dotenv()
@@ -12,7 +13,8 @@ db_pass = os.getenv("DB_PASS")
 db_host = os.getenv("DB_HOST")
 db_port = os.getenv("DB_PORT")
 db_name = os.getenv("DB_NAME")
-conn_string = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
+db_pass_encoded = quote_plus(db_pass)
+conn_string = f"postgresql://{db_user}:{db_pass_encoded}@{db_host}:{db_port}/{db_name}"
 
 engine = create_engine(conn_string)
 SessionLocal = sessionmaker(bind=engine)
