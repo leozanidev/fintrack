@@ -22,3 +22,10 @@ SessionLocal = sessionmaker(bind=engine)
 # Se chamar DeclarativeBase() vai estar tentando instanciar DeclarativeBase, se chamar DeclarativeBase vai herdar
 class Base(DeclarativeBase):
     pass
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
