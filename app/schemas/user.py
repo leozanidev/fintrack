@@ -12,3 +12,7 @@ class UsuarioResponse(BaseModel):
     email: str
     criado_em: datetime
     ativo: bool
+
+class UsuarioLogin(BaseModel):
+    email: str
+    senha: str
