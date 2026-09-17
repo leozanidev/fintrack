@@ -4,6 +4,8 @@ from app.database import get_db
 from app.schemas.user import UsuarioCreate, UsuarioResponse
 from app.models.user import Usuarios
 from app.core.security import hash_senha
+from app.core.deps import get_usuario_atual
+
 
 router = APIRouter()
 
@@ -22,3 +24,7 @@ def criar_usuario(dados: UsuarioCreate, db: Session = Depends(get_db)):
     db.commit() # Executa o insert 
     db.refresh(novo_usuario) # Atualiza a atualização do objeto com os dados que foram criados pelo banco de dados
     return novo_usuario
+
+@router.get("/users/me", response_model=UsuarioResponse)
+def busca_usuario_atual(usuario_atual: Usuarios = Depends(get_usuario_atual)):
+    return usuario_atual
