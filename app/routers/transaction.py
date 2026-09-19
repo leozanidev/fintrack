@@ -1,10 +1,11 @@
 from app.schemas.transaction import TransacaoCreate, TransacaoResponse, TransacaoUpdate
-from app.models.transaction import Transacoes
+from app.models.transaction import Transacoes, TipoTransacao
 from app.models.user import Usuarios
 from app.core.deps import get_usuario_atual
 from app.database import get_db
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from datetime import datetime
 
 router = APIRouter()
 
@@ -26,9 +27,25 @@ def cria_transacao(dados: TransacaoCreate, db: Session = Depends(get_db), usuari
     return nova_transacao
 
 @router.get("/transactions", response_model=list[TransacaoResponse])
-def busca_transacoes(db: Session = Depends(get_db), usuario: Usuarios = Depends(get_usuario_atual)):
-    transacoes_usuario = db.query(Transacoes).filter(Transacoes.user_id == usuario.id).all()
-    return transacoes_usuario
+def busca_transacoes(
+    db: Session = Depends(get_db),
+    usuario: Usuarios = Depends(get_usuario_atual),
+    tipo: TipoTransacao | None = None,
+    category_id: int | None= None,
+    data_inicio: datetime | None = None,
+    data_fim: datetime | None = None,
+    skip: int = 0,
+    limit: int = 10):
+    transacoes_usuario = db.query(Transacoes).filter(Transacoes.user_id == usuario.id)
+    if (tipo is not None):
+        transacoes_usuario = transacoes_usuario.filter(Transacoes.tipo == tipo)
+    if (category_id is not None):
+         transacoes_usuario = transacoes_usuario.filter(Transacoes.category_id == category_id)
+    if (data_inicio is not None):
+         transacoes_usuario = transacoes_usuario.filter(Transacoes.data >= data_inicio)
+    if (data_fim is not None):
+         transacoes_usuario = transacoes_usuario.filter(Transacoes.data <= data_fim)
+    return transacoes_usuario.offset(skip).limit(limit).all()
 
 @router.get("/transactions/{id}", response_model=TransacaoResponse)
 def busca_transacao_id(id: int, db: Session = Depends(get_db), usuario: Usuarios = Depends(get_usuario_atual)):

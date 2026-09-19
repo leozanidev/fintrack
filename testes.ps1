@@ -25,3 +25,7 @@ $transacaoEditada
 
 # Exemplo: Apagar uma transação
 Invoke-RestMethod -Uri "http://127.0.0.1:8000/transactions/2" -Method Delete -Headers $headers
+
+# Exexmplo: Buscar transações com filtro
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/transactions?limit=1" -Method Get -Headers $headers
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/transactions?tipo=Despesa" -Method Get -Headers $headers
