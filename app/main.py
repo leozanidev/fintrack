@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv
-from app.routers import user, auth, transaction, category
+from app.routers import user, auth, transaction, category, dashboard
 from app import models
 import os
 
@@ -15,6 +15,7 @@ app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(transaction.router)
 app.include_router(category.router)
+app.include_router(dashboard.router)
 
 @app.get("/")
 def get_root():
