@@ -1,12 +1,9 @@
 from passlib.context import CryptContext
-from dotenv import load_dotenv
 from jose import jwt
 from datetime import datetime, timedelta
-import os
+from app.core.config import Settings
 
-load_dotenv()
-
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = Settings.secret_key
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

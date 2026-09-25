@@ -6,13 +6,13 @@ from sqlalchemy import pool
 from alembic import context
 
 from app.database import Base
+from app.models.user import Usuarios
 from app.models.category import Categorias
 from app.models.transaction import Transacoes
-from app.models.user import Usuarios
-from app.database import conn_string
+from app.core.config import Settings
 # this is the Alembic Config object, which provides
 config = context.config
-conn_string_replaced = conn_string.replace("%", "%%")
+conn_string_replaced = Settings.conn_string.replace("%", "%%")
 config.set_main_option("sqlalchemy.url", conn_string_replaced)
 # access to the values within the .ini file in use.
 
