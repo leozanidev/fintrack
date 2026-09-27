@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: fintrack_db
+    ports:
+      - '5432:5432'
+
+  api:
+    build: .
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
